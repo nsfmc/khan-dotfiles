@@ -90,7 +90,7 @@ edit_system_config() {
     # This will let you use a url like exercises.ka.local
     if ! grep -q "ka.local" /etc/hosts; then
         # This 'sudo tee' trick is the way to redirect stdin within sudo.
-        sudo tee -a /etc/hosts >/dev/null <<EOF 
+        sudo tee -a /etc/hosts >/dev/null <<EOF
 
 # KA local servers
 127.0.0.1       exercises.ka.local
@@ -109,7 +109,7 @@ EOF
         grep -v 'less eot' /usr/local/etc/mime.types | \
             sudo sh -c "cat; echo '$line' > /usr/local/etc/mime.types"
     else
-        sudo sh -c 'echo "$line" > /usr/local/etc/mime.types' 
+        sudo sh -c 'echo "$line" > /usr/local/etc/mime.types'
     fi
     sudo chmod a+r /usr/local/etc/mime.types
 
@@ -139,6 +139,10 @@ clone_repo() {
 }
 
 clone_repos() {
+    if ! ssh -T -v khanacademy@khanacademy.kilnhg.com | grep -q \
+        -e "Authentication succeeded (publickey)"; then
+        add_fatal_error "Please Set Up Your Kiln SSH Keys"
+    fi
     echo "Cloning repositories, including the main 'webapp' repo"
     clone_repo ssh://khanacademy@khanacademy.kilnhg.com/Website/Group/webapp \
         khan/
@@ -243,7 +247,7 @@ echo "---------------------------------------------------------------------"
 
 if [ -n "$warnings" ]; then
     echo "-- WARNINGS:"
-    # echo is very inconsistent about whether it supports -e. :-( 
+    # echo is very inconsistent about whether it supports -e. :-(
     echo "$warnings" | sed 's/\\n/\n/g'
 else
     echo "DONE!"
