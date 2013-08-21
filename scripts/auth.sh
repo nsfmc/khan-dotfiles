@@ -4,7 +4,7 @@
 
 set -e 
 
-# load helpers for prettyprinting
+# load helpers for printing info/success/etc
 source "_helpers.sh"
 
 verify_ssh_keys () {
@@ -51,8 +51,11 @@ verify_ssh_auth () {
         error "Still no luck with $service_name ssh auth. poke a dev!"
         exit
       fi
+      # copy the key
+      copy_ssh_key
       # otherwise prompt to upload keys
       notice "\n$service_name ssh auth didn't seem to work, let's add your ssh key"
+      notice "\nYour ssh key has already been copied to the clipboard."
       user "${tty_bold}Press enter${tty_normal} to open $service_name on the web"
       read 
       open $webpage_url
@@ -80,11 +83,7 @@ copy_ssh_key () {
 }
 
 register_ssh_keys() {
-  notice "Opening some webpages for you to register your ssh key."
-  notice "We've already copied the key into the clipboard for you."
-  copy_ssh_key
   verify_ssh_auth "github" true
-  copy_ssh_key
   verify_ssh_auth "kiln" true
 }
 
