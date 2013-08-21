@@ -91,7 +91,13 @@ install_homebrew_cask () {
   # Notably an unsuccessful brew uninstall will not clean 
   # /usr/local/Library/Taps
   # but will list brew cask as being tapped 
-  info "checking for homebrew cask"
+  info "checking for homebrew cask\n"
+  brew_home=`brew --prefix`
+  if [[ -d "${brew_home}/Library/Taps/phinze-cask" ]]
+  then
+    success "Found unlinked homebrew cask, repairing"
+    brew tap --repair
+  fi
   if ! brew tap | grep -q -e 'phinze/cask'
   then
     notice "'tapping' homebrew cask, it's like homebrew for .apps"
