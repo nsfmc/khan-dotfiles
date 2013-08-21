@@ -86,11 +86,6 @@ install_homebrew() {
 }
 
 install_homebrew_cask () {
-  # ZOMG do way more checking here
-  # 
-  # Notably an unsuccessful brew uninstall will not clean 
-  # /usr/local/Library/Taps
-  # but will list brew cask as being tapped 
   info "checking for homebrew cask\n"
   brew_home=`brew --prefix`
   if [[ -d "${brew_home}/Library/Taps/phinze-cask" ]]
@@ -112,18 +107,21 @@ install_homebrew_cask () {
   fi
 }
 
-install_homebrew_essentials () {
-  info "Checking for homebrew's git"
-  if ! brew list | grep -q -e 'git'
+install_pip (){
+  info "Checking for pip installer"
+  if [ ! "$(which pip)" ]
   then
-    success "Installing homebrew's git which is newer than osx's"
-    brew install git 
+    notice "Going to install pip globally, which requires sudo access"
+    sudo -v
+    curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+    sudo python "get-pip.py"
+    mv "get-pip.py" "$HOME/.Trash"
   else
-    success "Homebrew's git already installed"
+    success "Great! pip is already installed"
   fi
 }
 
 check_paths
 install_homebrew
-install_homebrew_essentials
 install_homebrew_cask
+install_pip
