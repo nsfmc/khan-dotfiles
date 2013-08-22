@@ -86,24 +86,37 @@ install_homebrew() {
 }
 
 install_homebrew_cask () {
-  info "checking for homebrew cask\n"
+  info "checking for homebrew cask"
   brew_home=`brew --prefix`
-  if [[ -d "${brew_home}/Library/Taps/phinze-cask" ]]
+  if [[ -d "${brew_home}/Library/Taps/phinze-cask" ]] && ! brew tap | grep -q -e "phinze"
   then
     success "Found unlinked homebrew cask, repairing"
     brew tap --repair
   fi
   if ! brew tap | grep -q -e 'phinze/cask'
   then
-    notice "'tapping' homebrew cask, it's like homebrew for .apps"
+    success "'tapping' homebrew cask, it's like homebrew for .apps"
     brew tap phinze/homebrew-cask
   fi
   if ! brew list | grep -q -e 'brew-cask'
   then
-    notice "installing ${tty_bold}brew cask${tty_normal}"
+    success "installing ${tty_bold}brew cask${tty_normal}"
     brew install brew-cask
   else
-    notice "brew cask already installed!"
+    success "brew cask already installed!"
+  fi
+}
+
+fix_python_perms () {
+  info "Checking if /Library/Python/2.7/site-packages is writable"
+  if ! ls -le /Library/Python/2.7 | grep  -q -e "user:$USER allow"
+  then
+    success "I am going to make /Library/Python/2.7/site-packages writable"
+    notice "This requires sudo"
+    sudo -v
+    sudo chmod +a "user:$USER allow add_subdirectory,add_file,delete_child,directory_inherit" /Library/Python/2.7/site-packages
+  else
+    success "System Python site-packages are already writable by you."
   fi
 }
 
@@ -111,8 +124,7 @@ install_pip (){
   info "Checking for pip installer"
   if [ ! "$(which pip)" ]
   then
-    notice "Going to install pip globally, which requires sudo access"
-    sudo -v
+    notice "Going to install pip globally"
     curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
     sudo python "get-pip.py"
     mv "get-pip.py" "$HOME/.Trash"
@@ -121,7 +133,32 @@ install_pip (){
   fi
 }
 
+install_rvm () {
+  info "Checking for rvm"
+  if [ ! -e "$HOME/.rvm" ]
+  then
+    success "rvm isn't installed, i'm going to install it for you"
+    curl -L https://get.rvm.io | bash -s stable
+  else
+    success "rvm already installed, have you updated it recently?"
+  fi
+}
+
+install_npm () {
+  # yes, technically this isn't npm, but now they're bundled together
+  info "Checking for node"
+  if [ ! `which npm` ]
+  then 
+    success "Installing node via homebrew (this will take a short while)";
+    brew install node
+  else 
+    success "Found npm! Great!"; fi
+}
+
 check_paths
 install_homebrew
 install_homebrew_cask
+fix_python_perms
 install_pip
+install_rvm
+install_npm
