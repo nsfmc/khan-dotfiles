@@ -4,6 +4,7 @@ set -e
 
 source "./_helpers.sh"
 
+# TODO(marcos) replace this with mostly install_app from _helpers.sh
 install_dropbox () {
   notice "Installing dropbox"
   if [[ -d "$HOME/Applications/Dropbox.app" || -d "/Applications/Dropbox.app" ]]

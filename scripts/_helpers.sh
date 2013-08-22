@@ -24,3 +24,18 @@ warn () {
 error () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
 }
+
+install_app () {
+  # $1 == full name you would see in /Applications (without .app)
+  # $2 == common name (for cask)
+  # $3 == what you call it in casual conversation
+  info "Checking for $3"
+  if [[ -d "$HOME/Applications/$1.app" || -d "/Applications/$1.app" ]]
+  then
+    success "Great! Found $3"
+  else
+  	info "\nApp not found, installing via cask\n"
+    brew cask install $2
+    success "Great, installed $3"
+  fi
+}

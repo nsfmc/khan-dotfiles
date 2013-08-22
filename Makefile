@@ -12,5 +12,7 @@ fulltime:
 	./package_managers.sh; \
 	./dropbox.sh; \
 	./auth.sh; \
-	./clone_repos.sh ${ARGS}
+	./vcs.sh; \
+	./clone_repos.sh ${ARGS}; \
+	./common_dev_apps.sh \
 	popd
