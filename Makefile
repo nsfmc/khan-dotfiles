@@ -19,4 +19,11 @@ fulltime:
 	popd
 
 intern:
-	pushd scripts
+	pushd "scripts"; \
+	./package_managers.sh; \
+	./auth.sh; \
+	./vcs.sh; \
+	./clone_repos.sh ${ARGS}; \
+	./webapp_config.sh ${ARGS}; \
+	./common_dev_apps.sh; \
+	popd
