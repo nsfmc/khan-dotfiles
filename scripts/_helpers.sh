@@ -34,7 +34,7 @@ install_app () {
   then
     success "Great! Found $3"
   else
-  	success "$3 not found, installing via cask"
+    success "$3 not found, installing via cask"
     brew cask install $2 > /dev/null
     success "Great, installed $3"
   fi
