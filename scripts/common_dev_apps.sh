@@ -9,7 +9,7 @@ setup_gae () {
   if [ -h "/usr/local/bin/dev_appserver.py" ] || `brew list | grep -q -e 'google-app-engine'`
   then
     success "Google App Engine already installed"
-  else  
+  else
     success "Installing google app engine with homebrew"
     brew install google-app-engine > /dev/null
     brew pin google-app-engine > /dev/null

@@ -152,7 +152,7 @@ install_rvm_ruby () {
   ruby19=`$HOME/.rvm/bin/rvm list remote | grep -o 'ruby-1.9.*$'`
 
   if [ ruby19 ]
-  then 
+  then
     success "Found prebuilt ruby 1.9 in rvm."
     $HOME/.rvm/bin/rvm install $ruby19 --binary
   else
@@ -171,10 +171,10 @@ install_npm () {
   # yes, technically this isn't npm, but now they're bundled together
   info "Checking for node"
   if [ ! `which npm` ]
-  then 
+  then
     success "Installing node via homebrew (this will take a short while)";
     brew install node
-  else 
+  else
     success "Found npm! Great!"; fi
 }
 

@@ -2,7 +2,7 @@
 
 # a slightly improved auth token generator/checker
 
-set -e 
+set -e
 
 # load helpers for printing info/success/etc
 source "_helpers.sh"
@@ -57,7 +57,7 @@ verify_ssh_auth () {
       notice "\n$service_name ssh auth didn't seem to work, let's add your ssh key"
       notice "\nYour ssh key has already been copied to the clipboard."
       user "${tty_bold}Press enter${tty_normal} to open $service_name on the web"
-      read 
+      read
       open $webpage_url
       user "${tty_bold}Press enter${tty_normal} once you've pasted your $service_name key"
       read

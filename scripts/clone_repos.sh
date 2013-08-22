@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# This clones all the repos most ka-devs need. 
-# 
+# This clones all the repos most ka-devs need.
+#
 # $1 WEBAPP (defaults to $HOME/khan)
 # $2 DEVTOOLS (defaults to $HOME/khan/devtools)
 
@@ -52,7 +52,7 @@ get_kiln_hg_extensions () {
   user "Will you be using hg? [yn]"
   read -n 1 kilnplease
 
-  case "$kilnplease" in 
+  case "$kilnplease" in
     y )
       get_hgexts=true;;
     Y )

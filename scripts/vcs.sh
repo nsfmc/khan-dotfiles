@@ -9,7 +9,7 @@ install_homebrew_git () {
   if ! brew list | grep -q -e 'git'
   then
     success "Installing homebrew's git which is newer than osx's"
-    brew install git 
+    brew install git
   else
     success "Homebrew's git already installed"
   fi
