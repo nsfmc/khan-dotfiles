@@ -9,7 +9,7 @@
 
 Khan-dotfiles is a very ambitious project. It attempts to do three things:
 
-1. install applications your computer needs (packages)
+1. install applications and code your computer needs (packages)
 2. configure those packages and set useful defaults (dotfiles)
 3. set up auth tokens for github, kiln, etc (authentication)
 

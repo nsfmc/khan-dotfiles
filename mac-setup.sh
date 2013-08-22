@@ -51,7 +51,7 @@ register_ssh_keys() {
     fi
 
     # Copy the public key into the OS X clipboard.
-    cat ~/.ssh/id_rsa.pub | pbcopy
+    cat ~/.ssh/id_rsa.pub | pbcopy 
 
     # Have the user copy it into kiln and github.
     echo "Opening kiln and github for you to register your ssh key."

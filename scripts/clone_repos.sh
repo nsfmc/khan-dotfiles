@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This clones all the repos most ka-devs need. 
 # 
