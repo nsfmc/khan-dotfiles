@@ -14,5 +14,9 @@ fulltime:
 	./auth.sh; \
 	./vcs.sh; \
 	./clone_repos.sh ${ARGS}; \
-	./common_dev_apps.sh \
+	./webapp_config.sh ${ARGS}; \
+	./common_dev_apps.sh; \
 	popd
+
+intern:
+	pushd scripts
