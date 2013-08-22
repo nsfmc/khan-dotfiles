@@ -2,7 +2,7 @@ tty_bold=`tput bold`
 tty_normal=`tput sgr0`
 
 notice () {
-  printf "$1\n"
+  printf "         $1\n"
 }
 
 info () {
@@ -34,8 +34,8 @@ install_app () {
   then
     success "Great! Found $3"
   else
-  	info "\nApp not found, installing via cask\n"
-    brew cask install $2
+  	success "$3 not found, installing via cask"
+    brew cask install $2 > /dev/null
     success "Great, installed $3"
   fi
 }
