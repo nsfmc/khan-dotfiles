@@ -138,12 +138,32 @@ install_pip (){
 
 install_rvm () {
   info "Checking for rvm"
-  if [ ! -e "$HOME/.rvm" ]
+  if [ ! -e "$HOME/.rvm/bin/rvm" ]
   then
     success "rvm isn't installed, i'm going to install it for you"
     curl -L https://get.rvm.io | bash -s stable
   else
     success "rvm already installed, have you updated it recently?"
+  fi
+}
+
+install_rvm_ruby () {
+  info "Possibly installing ruby 1.9 via rvm..."
+  ruby19=`$HOME/.rvm/bin/rvm list remote | grep -o 'ruby-1.9.*$'`
+
+  if [ ruby19 ]
+  then 
+    success "Found prebuilt ruby 1.9 in rvm."
+    $HOME/.rvm/bin/rvm install $ruby19 --binary
+  else
+    error "No prebuilt ruby 1.9 available for your system :("
+    warn "I'm setting GEM_HOME to install gems to your user directory"
+    warn "Practically speaking, this accomplishes the same goals as rvm"
+
+    echo "GEM_HOME=$HOME/.gem" >> $HOME/.profile
+    echo "GEM_HOME=$HOME/.gem" >> $HOME/.zprofile
+    echo "PATH=$PATH:$HOME/.gem/bin" >> $HOME/.profile
+    echo "PATH=$PATH:$HOME/.gem/bin" >> $HOME/.zprofile
   fi
 }
 
@@ -164,4 +184,5 @@ install_homebrew_cask
 fix_python_perms
 install_pip
 install_rvm
+install_rvm_ruby
 install_npm

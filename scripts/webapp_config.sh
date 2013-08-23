@@ -46,13 +46,20 @@ install_webapp_deps () {
   # activate the virtualenv
   . ~/.virtualenv/khan27/bin/activate
 
-  # this is for 
+  # this is for building numpy a bit later
   export CC=gcc
   export CXX=g++
   export FFLAGS=ff2c
 
+  if [ -d "$HOME/.rvm" ] && ! `which rvm`
+  then
+    # TODO (marcos) source profile to pick up rvm (somehow)
+    info "Sourcing .profile to pick up rvm"
+    source "$HOME/.profile"
+  fi
   info "Gem Installing bundler"
   gem install bundler
+
   info "Installing dependencies for webapp"
   ( cd "$DEFAULT_WEBAPP/webapp" && make install_deps )
   info "Installing dependencies for khan-exercises"
