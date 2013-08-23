@@ -129,7 +129,7 @@ install_pip (){
   then
     notice "Going to install pip globally"
     curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-    sudo python "get-pip.py"
+    python "get-pip.py"
     mv "get-pip.py" "$HOME/.Trash"
   else
     success "Great! pip is already installed"

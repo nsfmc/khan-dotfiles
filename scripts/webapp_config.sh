@@ -19,8 +19,8 @@ install_venv () {
   info "Is virtualenv installed?"
   if [ ! "$(which virtualenv)" ]
   then
-    success "virtualenv not found, going to install it with sudo and pip"
-    sudo pip install -q virtualenv
+    success "virtualenv not found, going to install it with pip"
+    pip install -q virtualenv
   else
     success "Great, virtualenv found"
   fi
@@ -51,8 +51,8 @@ install_webapp_deps () {
   export CXX=g++
   export FFLAGS=ff2c
 
-  info "Gem Installing bundler with sudo\n"
-  sudo gem install bundler
+  info "Gem Installing bundler"
+  gem install bundler
   info "Installing dependencies for webapp"
   ( cd "$DEFAULT_WEBAPP/webapp" && make install_deps )
   info "Installing dependencies for khan-exercises"

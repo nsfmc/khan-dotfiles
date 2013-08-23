@@ -19,8 +19,8 @@ install_pip_hg () {
   info "Checking for mercurial"
   if [ ! $(which hg) ]
   then
-    success "Installing mercurial via pip (and sudo)"
-    sudo pip install mercurial
+    success "Installing mercurial via pip"
+    pip install mercurial
   else
     success "Mercurial is installed!"
   fi
