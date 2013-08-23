@@ -57,7 +57,10 @@ check_paths () {
   if [ "$approach" != "ok" ]
   then
     # just check to see that we're not appending needlessly
-    source $PROFILE_FILE
+    if [ -e $PROFILE_FILE ]
+    then
+      source $PROFILE_FILE
+    fi
     is_fixed=`python local.py`
     if [ "$is_fixed" == "ok" ]
     then
