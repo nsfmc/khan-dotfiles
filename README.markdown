@@ -10,8 +10,9 @@
 Khan-dotfiles is a very ambitious project. It attempts to do three things:
 
 1. install applications and code your computer needs (packages)
-2. configure those packages and set useful defaults (dotfiles)
-3. set up auth tokens for github, kiln, etc (authentication)
+2. set up auth tokens for github, kiln, etc (authentication)
+3. configure those packages (more packaging)
+4. set useful defaults and shell goodies (traditionally, dotfiles)
 
 right now, you sort of need to trust that it will do the right thing which is
 something of a tall order if, say, you've already been using your computer
@@ -20,6 +21,22 @@ productively for months.
 but the goal is that you will be able to opt into each of these things at
 various levels of granularity which are appropriate for you at this very
 moment!
+
+So at the highest level, a new user should be able to onboard their machine by
+doing something as mundane as
+
+    make fulltime
+
+but somebody that has curmudgeonly resisted cloning this repo because they
+like their extravagant zsh setup as it is, thankyouverymuch, should also be
+able to run something like
+
+    make git-goodies
+
+and specifically opt into whatever new shortcut everyone keeps talking about.
+
+a defining principle of the dotfiles is allowing people to opt into changes
+rather than being opted into them. Everyone has their own habits and that's ok.
 
 ## More info
 
