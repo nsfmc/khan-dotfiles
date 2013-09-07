@@ -87,5 +87,48 @@ register_ssh_keys() {
   verify_ssh_auth "kiln" true
 }
 
+setup_vcs_identity(){
+  info "Checking if identity set up in .hgrc and .gitconfig"
+  if grep -q '%NAME_FIRST_LAST%' "$HOME/.gitconfig" "$HOME/.hgrc" || \
+    grep -q '%EMAIL%' "$HOME/.gitconfig" "$HOME/.hgrc"
+  then
+    success "Hi. Let's set up your .gitconfig and .hgrc with your name"
+    introduce_self
+  else
+    success "Your name is already present in .gitconfig and .hgrc"
+  fi
+}
+
+introduce_self() {
+  confirm="N"
+  info "What's your full name?\n"
+  user "(e.g. ${tty_bold}First Last$tty_normal):"
+  read name
+  info "What's your KA username, without @ka.org\n"
+
+  username=`echo $name | awk '{print tolower($1)}'`
+  user "(e.g. ${tty_bold}${username}${tty_normal}):"
+  read email
+  email=${email:-$username}
+  info "Commits will be signed like this:\n"
+  notice "${tty_bold}${name} <${email}@khanacademy.org>${tty_normal}"
+
+  user "Does this look ok? (yN):"
+  read -n1 confirm
+
+  case $confirm in
+  y|Y)
+    success "Great! updating ~/.gitconfig and ~/.hgrc with your name"
+    ;;
+  *)
+    warn "No problem, let's try that again"
+    introduce_self
+    ;;
+  esac
+  perl -pli -e "s/%EMAIL%/$email/g" "$HOME/.gitconfig" "$HOME/.hgrc"
+  perl -pli -e "s/%NAME_FIRST_LAST%/$name/g" "$HOME/.gitconfig" "$HOME/.hgrc"
+}
+
+setup_vcs_identity
 verify_ssh_keys
 register_ssh_keys
