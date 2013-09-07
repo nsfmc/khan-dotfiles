@@ -133,3 +133,9 @@ setup_vcs_identity
 verify_ssh_keys
 register_ssh_keys
 arc install-certificate
+
+success "Great, it looks like everything is setup!"
+notice "You can test that things are working by doing one of the following"
+notice "* opening a new terminal window"
+notice "* running ${tty_bold}git p${tty_normal} in ~/khan/webapp"
+notice "* having a lemonade"
