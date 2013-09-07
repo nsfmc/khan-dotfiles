@@ -132,3 +132,4 @@ introduce_self() {
 setup_vcs_identity
 verify_ssh_keys
 register_ssh_keys
+arc install-certificate
