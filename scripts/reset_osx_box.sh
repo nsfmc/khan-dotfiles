@@ -5,8 +5,8 @@ set -e
 source "_helpers.sh"
 
 warn "resetting identity in .hgrc, .gitconfig"
-mv ~/.khan-dotfiles/gitconfig.default ~/.gitconfig
-mv ~/.khan-dotfiles/hgrc.default ~/.hgrc
+cp -f ~/.khan-dotfiles/gitconfig.default ~/.gitconfig
+cp -f ~/.khan-dotfiles/hgrc.default ~/.hgrc
 
 warn "removing ssh keys"
 rm -f ~/.ssh/id_rsa
@@ -16,7 +16,7 @@ warn "removing arcanist pull tmpfile"
 rm -f /tmp/arc.pull
 
 warn "restoring default .arcrc"
-mv ~/khan/devtools/arcanist/khan-bin/khan-arcrc ~/.arcrc
+cp -f ~/khan/devtools/arcanist/khan-bin/khan-arcrc ~/.arcrc
 
 warn "clearing viminfo"
 rm -f ~/.viminfo
@@ -35,6 +35,9 @@ rm -f ~/.bash_history
 
 warn "restoring .hushlogin"
 touch ~/.hushlogin
+
+warn "setting up bootstrap script"
+touch ~/.bootstrap-ka
 
 success "great! close all terminal windows except this one"
 info "clear this window's history by hitting option-command-k\n"
