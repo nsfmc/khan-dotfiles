@@ -15,6 +15,9 @@ rm -f ~/.ssh/id_rsa.pub
 warn "removing arcanist pull tmpfile"
 rm -f /tmp/arc.pull
 
+warn "restoring default .arcrc"
+mv ~/khan/devtools/arcanist/khan-bin/khan-arcrc ~/.arcrc
+
 warn "clearing viminfo"
 rm -f ~/.viminfo
 
