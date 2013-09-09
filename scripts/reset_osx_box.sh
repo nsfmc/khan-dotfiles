@@ -4,6 +4,10 @@ set -e
 
 source "_helpers.sh"
 
+warn "resetting identity in .hgrc, .gitconfig"
+mv ~/.khan-dotfiles/gitconfig.default ~/.gitconfig
+mv ~/.khan-dotfiles/hgrc.default ~/.hgrc
+
 warn "removing ssh keys"
 rm -f ~/.ssh/id_rsa
 rm -f ~/.ssh/id_rsa.pub
@@ -16,6 +20,9 @@ rm -f ~/.viminfo
 
 warn "removing .vim/"
 rm -rf ~/.vim
+
+warn "removin random ssh seed ~/.rnd"
+rm -f ~/.rnd
 
 warn "removing less history"
 rm -f ~/.lesshst
