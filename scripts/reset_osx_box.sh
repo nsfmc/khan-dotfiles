@@ -17,6 +17,7 @@ rm -f /tmp/arc.pull
 
 warn "restoring default .arcrc"
 cp -f ~/khan/devtools/arcanist/khan-bin/khan-arcrc ~/.arcrc
+chmod 600 ~/.arcrc
 
 warn "clearing viminfo"
 rm -f ~/.viminfo
