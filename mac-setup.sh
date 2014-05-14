@@ -3,6 +3,41 @@
 # Bail on any errors
 set -e
 
+tty_bold=`tput bold`
+tty_normal=`tput sgr0`
+
+# for printing standard echoish messages
+notice () {
+    printf "         $1\n"
+}
+
+# for printing logging messages that *may* be replaced by
+# a success/warn/error message
+info () {
+    printf "  [ \033[00;34m..\033[0m ] $1"
+}
+
+# for printing prompts that expect user input and will be
+# replaced by a success/warn/error message
+user () {
+    printf "\r  [ \033[0;33m??\033[0m ] $1 "
+}
+
+# for replacing previous input prompts with success messages
+success () {
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+# for replacing previous input prompts with warnings
+warn () {
+    printf "\r\033[2K  [\033[0;33mWARN\033[0m] $1\n"
+}
+
+# for replacing previous prompts with errors
+error () {
+    printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+}
+
 update_path() {
     # We need /usr/local/bin to come before /usr/bin on the path,
     # to pick up brew files we install.
@@ -40,6 +75,20 @@ EOF`
         echo "# Put /usr/local/bin right before /usr/bin" >> "$PROFILE_FILE"
         echo 'PATH=`'"$path_update"'`' >> "$PROFILE_FILE"
     fi
+}
+
+maybe_generate_ssh_keys () {
+  # Create a public key if need be.
+  info "Checking for ssh keys"
+  mkdir -p ~/.ssh
+  if [ -e ~/.ssh/id_rsa ] || [ -e ~/.ssh/id_dsa ]
+  then
+    success "Found existing ssh keys"
+  else
+    ssh-keygen -q -N "" -t rsa -f ~/.ssh/id_rsa
+    success "Generated an rsa ssh key at ~/.ssh/id_rsa"
+  fi
+  return 0
 }
 
 register_ssh_keys() {
@@ -217,20 +266,21 @@ install_helpful_tools() {
 }
 
 
-echo "Running Khan Installation Script 1.0"
-echo "Warning: This is only tested on Mac OS 10.7 (Lion)"
-echo "  After each statement, either something will open for you to"
-echo "    interact with, or a script will run for you to use"
-echo "  Press enter when a download/install is completed to go to"
-echo "    the next step (including this one)"
+notice "Running Khan Installation Script 1.1"
+notice "Warning: This is only tested on Mac OS 10.7 (Lion)"
+notice "  After each statement, either something will open for you to"
+notice "    interact with, or a script will run for you to use"
+notice "  Press enter when a download/install is completed to go to"
+notice "    the next step (including this one)"
 
 read -p "Press enter to continue..."
 
 # Run sudo once at the beginning to get the necessary permissions.
-echo "This setup script needs your password to install things as root."
+notice "This setup script needs your password to install things as root."
 sudo sh -c 'echo Thanks'
 
 update_path
+maybe_generate_ssh_keys
 register_ssh_keys
 install_gcc
 install_hipchat
@@ -241,5 +291,5 @@ install_appengine_launcher
 install_phantomjs
 install_helpful_tools
 
-echo "You might be done! \n\n \
+notice "You might be done! \n\n \
 You should open a new shell to pick up any changes."
